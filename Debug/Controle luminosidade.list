@@ -114,8 +114,8 @@ int main(void)
 
   /* USER CODE END 2 */
   // Inicia o PWM
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
- 8000160:	2100      	movs	r1, #0
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+ 8000160:	2104      	movs	r1, #4
  8000162:	4826      	ldr	r0, [pc, #152]	@ (80001fc <main+0xb0>)
  8000164:	f001 fa0a 	bl	800157c <HAL_TIM_PWM_Start>
   /* Infinite loop */
@@ -153,12 +153,12 @@ int main(void)
  80001a0:	4b18      	ldr	r3, [pc, #96]	@ (8000204 <main+0xb8>)
  80001a2:	601a      	str	r2, [r3, #0]
               }
-              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwmValue);
+              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, pwmValue);
  80001a4:	4b17      	ldr	r3, [pc, #92]	@ (8000204 <main+0xb8>)
  80001a6:	681a      	ldr	r2, [r3, #0]
  80001a8:	4b14      	ldr	r3, [pc, #80]	@ (80001fc <main+0xb0>)
  80001aa:	681b      	ldr	r3, [r3, #0]
- 80001ac:	635a      	str	r2, [r3, #52]	@ 0x34
+ 80001ac:	639a      	str	r2, [r3, #56]	@ 0x38
               HAL_Delay(200);
  80001ae:	20c8      	movs	r0, #200	@ 0xc8
  80001b0:	f000 faa2 	bl	80006f8 <HAL_Delay>
@@ -196,12 +196,12 @@ int main(void)
  80001e6:	4b07      	ldr	r3, [pc, #28]	@ (8000204 <main+0xb8>)
  80001e8:	601a      	str	r2, [r3, #0]
               }
-              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwmValue);
+              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, pwmValue);
  80001ea:	4b06      	ldr	r3, [pc, #24]	@ (8000204 <main+0xb8>)
  80001ec:	681a      	ldr	r2, [r3, #0]
  80001ee:	4b03      	ldr	r3, [pc, #12]	@ (80001fc <main+0xb0>)
  80001f0:	681b      	ldr	r3, [r3, #0]
- 80001f2:	635a      	str	r2, [r3, #52]	@ 0x34
+ 80001f2:	639a      	str	r2, [r3, #56]	@ 0x38
               HAL_Delay(200);
  80001f4:	20c8      	movs	r0, #200	@ 0xc8
  80001f6:	f000 fa7f 	bl	80006f8 <HAL_Delay>
@@ -425,8 +425,8 @@ static void MX_TIM1_Init(void)
     Error_Handler();
  800033c:	f000 f898 	bl	8000470 <Error_Handler>
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
- 8000340:	2360      	movs	r3, #96	@ 0x60
+  sConfigOC.OCMode = TIM_OCMODE_PWM2;
+ 8000340:	2370      	movs	r3, #112	@ 0x70
  8000342:	627b      	str	r3, [r7, #36]	@ 0x24
   sConfigOC.Pulse = 0;
  8000344:	2300      	movs	r3, #0
@@ -446,9 +446,9 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
  8000358:	2300      	movs	r3, #0
  800035a:	63fb      	str	r3, [r7, #60]	@ 0x3c
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
  800035c:	f107 0324 	add.w	r3, r7, #36	@ 0x24
- 8000360:	2200      	movs	r2, #0
+ 8000360:	2204      	movs	r2, #4
  8000362:	4619      	mov	r1, r3
  8000364:	4813      	ldr	r0, [pc, #76]	@ (80003b4 <MX_TIM1_Init+0x138>)
  8000366:	f001 f9ab 	bl	80016c0 <HAL_TIM_PWM_ConfigChannel>
@@ -681,9 +681,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** DISABLE: JTAG-DP Disabled and SW-DP Disabled
+  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
-  __HAL_AFIO_REMAP_SWJ_DISABLE();
+  __HAL_AFIO_REMAP_SWJ_NOJTAG();
  80004b2:	4b0a      	ldr	r3, [pc, #40]	@ (80004dc <HAL_MspInit+0x60>)
  80004b4:	685b      	ldr	r3, [r3, #4]
  80004b6:	60fb      	str	r3, [r7, #12]
@@ -691,7 +691,7 @@ void HAL_MspInit(void)
  80004ba:	f023 63e0 	bic.w	r3, r3, #117440512	@ 0x7000000
  80004be:	60fb      	str	r3, [r7, #12]
  80004c0:	68fb      	ldr	r3, [r7, #12]
- 80004c2:	f043 6380 	orr.w	r3, r3, #67108864	@ 0x4000000
+ 80004c2:	f043 7300 	orr.w	r3, r3, #33554432	@ 0x2000000
  80004c6:	60fb      	str	r3, [r7, #12]
  80004c8:	4a04      	ldr	r2, [pc, #16]	@ (80004dc <HAL_MspInit+0x60>)
  80004ca:	68fb      	ldr	r3, [r7, #12]
@@ -794,10 +794,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
  8000550:	60fb      	str	r3, [r7, #12]
  8000552:	68fb      	ldr	r3, [r7, #12]
     /**TIM1 GPIO Configuration
-    PA8     ------> TIM1_CH1
+    PA9     ------> TIM1_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_8;
- 8000554:	f44f 7380 	mov.w	r3, #256	@ 0x100
+    GPIO_InitStruct.Pin = GPIO_PIN_9;
+ 8000554:	f44f 7300 	mov.w	r3, #512	@ 0x200
  8000558:	613b      	str	r3, [r7, #16]
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  800055a:	2302      	movs	r3, #2
