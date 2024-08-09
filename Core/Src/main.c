@@ -101,7 +101,7 @@ int main(void)
 
   /* USER CODE END 2 */
   // Inicia o PWM
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
@@ -112,7 +112,7 @@ int main(void)
               if (pwmValue > pwmMax) {
                   pwmValue = pwmMax;
               }
-              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwmValue);
+              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, pwmValue);
               HAL_Delay(200);
           }
       }
@@ -123,7 +123,7 @@ int main(void)
               if (pwmValue < pwmMin) {
                   pwmValue = pwmMin;
               }
-              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwmValue);
+              __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, pwmValue);
               HAL_Delay(200);
           }
       }
@@ -217,7 +217,7 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
   {
     Error_Handler();
   }
